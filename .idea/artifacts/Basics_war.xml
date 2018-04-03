@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Basics:war">
+    <output-path>$PROJECT_DIR$/../Basics_bootstrap_mysql/target</output-path>
+    <root id="archive" name="Basics-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Basics:war exploded" />
+    </root>
+  </artifact>
+</component>
