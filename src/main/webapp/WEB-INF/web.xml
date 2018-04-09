@@ -1,101 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee     http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-
-  <display-name>Archetype Created Web Application</display-name>
-
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-
-  <!-- Spring beans 配置文件所在目录 -->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>mybatis</display-name>
   <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:applicationContext.xml</param-value>
+    <param-name>contextConfigLocation</param-name>d
+    <param-value>classpath:spring.xml,classpath:spring-mybatis.xml
+    </param-value>
   </context-param>
-
-  <!-- spring mvc 配置 -->
-  <servlet>
-    <servlet-name>spring</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-  </servlet>
-<!--  <servlet-mapping>
-    <servlet-name>spring</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>-->
-
-    <servlet-mapping>
-        <servlet-name>spring</servlet-name>
-        <url-pattern>*.html</url-pattern>
-    </servlet-mapping>
-  <!-- Encoding -->
   <filter>
+    <description>字符集过滤器</description>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
     <init-param>
+      <description>字符集编码</description>
       <param-name>encoding</param-name>
       <param-value>UTF-8</param-value>
     </init-param>
-    <init-param>
-      <param-name>forceEncoding</param-name>
-      <param-value>true</param-value>
-    </init-param>
   </filter>
-  <filter-mapping>
-    <filter-name>encodingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-
   <filter>
     <filter-name>XssSqlFilter</filter-name>
     <filter-class>com.sn.security.XssFilter</filter-class>
   </filter>
-  <!-- druid -->
-  <servlet>
-    <servlet-name>DruidStatServlet</servlet-name>
-    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-    <init-param>
-      <param-name>loginUsername</param-name>
-      <param-value>druid</param-value>
-    </init-param>
-    <init-param>
-      <param-name>loginPassword</param-name>
-      <param-value>druid</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>DruidStatServlet</servlet-name>
-    <url-pattern>/sys/druid/*</url-pattern>
-  </servlet-mapping>
-  <filter>
-    <filter-name>DruidWebStatFilter</filter-name>
-    <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
-    <init-param>
-      <param-name>exclusions</param-name>
-      <param-value>*.js,*.css,*.jpg,*.png,*.ico,*.gif,/sys/druid/*</param-value>
-    </init-param>
-  </filter>
   <filter-mapping>
-    <filter-name>DruidWebStatFilter</filter-name>
+    <filter-name>XssSqlFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-
-    <servlet>
-        <servlet-name>Competence</servlet-name>
-        <servlet-class>com.sn.controller.system.CompetenceManager</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-
-
-    <welcome-file-list>
-        <welcome-file>system/login.html</welcome-file>
-    </welcome-file-list>
-    <session-config>
-        <session-timeout>30</session-timeout>
-    </session-config>
-
-
+  <listener>
+    <description>spring监听器</description>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
+  <servlet>
+    <description>spring mvc servlet</description>
+    <servlet-name>springMvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <description>spring mvc 配置文件</description>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>Competence</servlet-name>
+    <servlet-class>com.sn.controller.system.CompetenceManager</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>springMvc</servlet-name>
+    <url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>/system/guide.html</welcome-file>
+  </welcome-file-list>
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
 </web-app>
